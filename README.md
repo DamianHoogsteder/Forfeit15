@@ -1,3 +1,3 @@
 # Forfeit15
 
-This the root repository containing the git submodules for the Forfeit15 API.
+Het hoofdproject voor Forfeit15, met Gitlab pipelines, API's en frontend.
