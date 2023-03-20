@@ -1,0 +1,32 @@
+stages:
+  - build
+  - test
+  - docker_build
+
+variables:
+  DOTNET_SDK_VERSION: "6.0"
+
+#JOBS
+.dotnet_build_base:
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
+  stage: build
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: DOTNET_SDK_VERSION
+    - run: dotnet restore
+    - run: dotnet build --configuration Release
+
+.dotnet_test_base:
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
+  stage: test
+  dependencies:
+    - .dotnet_build_base
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: DOTNET_SDK_VERSION
+    - run: dotnet restore
+    - run: dotnet test --configuration Release
