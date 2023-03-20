@@ -1,0 +1,1 @@
+﻿docker compose -p forfeit15_localhost up -d
