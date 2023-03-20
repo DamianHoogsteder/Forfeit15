@@ -1,3 +1,9 @@
 [submodule "Fortfeit15-postgres"]
 	path = Fortfeit15-postgres
 	url = https://github.com/DamianHoogsteder/Fortfeit15-postgres.git
+[submodule "Forfeit15-patch-notes"]
+	path = Forfeit15-patch-notes
+	url = https://github.com/DamianHoogsteder/Forfeit15-patch-notes.git
+[submodule "Forfeit15-frontend"]
+	path = Forfeit15-frontend
+	url = https://github.com/DamianHoogsteder/Forfeit15-frontend.git
