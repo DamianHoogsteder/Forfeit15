@@ -1,32 +1,56 @@
-stages:
-  - build
-  - test
-  - docker_build
+name: CI
 
-variables:
-  DOTNET_SDK_VERSION: "6.0"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-#JOBS
-.dotnet_build_base:
-  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
-  stage: build
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: DOTNET_SDK_VERSION
-    - run: dotnet restore
-    - run: dotnet build --configuration Release
+env:
+  DOTNET_SDK_VERSION = "6.0"
 
-.dotnet_test_base:
-  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_SDK_VERSION}
-  stage: test
-  dependencies:
-    - .dotnet_build_base
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: DOTNET_SDK_VERSION
-    - run: dotnet restore
-    - run: dotnet test --configuration Release
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Test
+        run: dotnet test --configuration Release
+        
+  build_submodules:
+    runs-on: ubuntu-latest
+    needs: docker_build
+    steps:
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      - name: Build submodules
+        run: |
+          cd Forfeit15-patch-notes
+          git checkout main
+          git pull
