@@ -2,3 +2,11 @@
 
 #Service containers
 services:
+  postgres:
+    image: postgres:15.0-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Welkom12345"
+    ports:
+      - "5432:5432/tcp"
