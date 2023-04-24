@@ -7,3 +7,9 @@
 [submodule "Forfeit15-frontend"]
 	path = Forfeit15-frontend
 	url = https://github.com/DamianHoogsteder/Forfeit15-frontend.git
+[submodule "Forfeit15-preferences"]
+	path = Forfeit15-preferences
+	url = https://github.com/DamianHoogsteder/Forfeit15.git
+[submodule "Forfeit15-authentication"]
+	path = Forfeit15-authentication
+	url = https://github.com/DamianHoogsteder/Forfeit15.git
