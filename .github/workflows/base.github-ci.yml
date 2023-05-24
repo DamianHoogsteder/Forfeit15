@@ -20,7 +20,7 @@ jobs:
         run: dotnet nuget add source https://nuget.pkg.github.com/DamianHoogsteder/index.json --username DamianHoogsteder --password ${{ secrets.ACCESS_SECRET }} --store-password-in-clear-text --name github 
       - name: Build submodules
         run: |
-          git submodule foreach --recursive 'git checkout main && git pull && dotnet build --configuration Release'
+          git submodule foreach --recursive 'if [ "$path" != "Forfeit15-frontend" ]; then git checkout main && git pull && dotnet build --configuration Release; fi'
           
   test_submodules:
     runs-on: ubuntu-latest
