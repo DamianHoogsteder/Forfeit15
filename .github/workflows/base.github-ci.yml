@@ -17,7 +17,7 @@ jobs:
         with:
           submodules: 'recursive'
       - name: Add custom package source
-        run: dotnet nuget add source https://nuget.pkg.github.com/DamianHoogsteder/index.json --name github --username DamianHoogsteder --password ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget add source https://nuget.pkg.github.com/DamianHoogsteder/index.json --name github --username DamianHoogsteder --password ${{ env.ACCESS_TOKEN }}
       - name: Build submodules
         run: |
           git submodule foreach --recursive 'git checkout main && git pull && dotnet build --configuration Release'
@@ -31,7 +31,7 @@ jobs:
         with:
           submodules: 'recursive'
       - name: Add custom package source
-        run: dotnet nuget add source https://nuget.pkg.github.com/DamianHoogsteder/index.json --name github --username DamianHoogsteder --password ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget add source https://nuget.pkg.github.com/DamianHoogsteder/index.json --name github --username DamianHoogsteder --password ${{ env.ACCESS_TOKEN }}
       - name: Build submodules
         run: |
           git submodule foreach --recursive 'git checkout main && git pull && dotnet test --configuration Release'
