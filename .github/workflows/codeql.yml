@@ -38,7 +38,7 @@ jobs:
 
     - name: Build Forfeit15-preferences
       run: |
-        cd Forfeit15-preferences
+        cd Forfeit15-Preference
         git checkout main
         git pull
         dotnet build --configuration Release
@@ -52,7 +52,7 @@ jobs:
         
     - name: Build Forfeit15-authentication
       run: |
-        cd Forfeit15-authentication
+        cd Forfeit15-auth
         git checkout main
         git pull
         # Add build commands specific to the submodule here
