@@ -39,14 +39,15 @@ jobs:
         run: dotnet restore
       - name: Test
         run: dotnet test --configuration Release
-        
+
   build_submodules:
     runs-on: ubuntu-latest
+    needs: test
     steps:
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
+      - name: Checkout code with submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
       - name: Build submodules
         run: |
-          cd Forfeit15-patch-notes
-          git checkout main
-          git pull
+          git submodule foreach --recursive 'git checkout main && git pull && dotnet build --configuration Release'
